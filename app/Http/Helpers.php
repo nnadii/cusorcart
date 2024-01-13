@@ -65,7 +65,6 @@ if (!function_exists('sendSMS')) {
         } elseif (OtpConfiguration::where('type', 'twillo')->first()->value == 1) {
             $sid = env("TWILIO_SID"); // Your Account SID from www.twilio.com/console
             $token = env("TWILIO_AUTH_TOKEN"); // Your Auth Token from www.twilio.com/console
-
             $client = new Client($sid, $token);
             try {
                 $message = $client->messages->create(
@@ -75,8 +74,7 @@ if (!function_exists('sendSMS')) {
                         'body' => $text
                     )
                 );
-            } catch (\Exception $e) {
-            }
+            } catch (\Exception $e) {}
         } elseif (OtpConfiguration::where('type', 'ssl_wireless')->first()->value == 1) {
             $token = env("SSL_SMS_API_TOKEN"); //put ssl provided api_token here
             $sid = env("SSL_SMS_SID"); // put ssl provided sid here
@@ -106,15 +104,10 @@ if (!function_exists('sendSMS')) {
             ));
 
             $response = curl_exec($ch);
-
             curl_close($ch);
-
             return $response;
         } elseif (OtpConfiguration::where('type', 'fast2sms')->first()->value == 1) {
-
-            if (strpos($to, '+91') !== false) {
-                $to = substr($to, 3);
-            }
+            if (strpos($to, '+91') !== false) { $to = substr($to, 3);}
 
             if (env("ROUTE") == 'dlt_manual') {
                 $fields = array(
@@ -197,8 +190,7 @@ if (!function_exists('areActiveRoutesHome')) {
 
 //highlights the selected navigation on frontend
 if (!function_exists('default_language')) {
-    function default_language()
-    {
+    function default_language() {
         return env("DEFAULT_LANGUAGE");
     }
 }
