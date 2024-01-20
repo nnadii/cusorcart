@@ -26,7 +26,7 @@ class CheckoutMiddleware
                 return redirect()->route('user.login');
             }
         }
-        else{
+        else {
             return $next($request);
         }
     }
