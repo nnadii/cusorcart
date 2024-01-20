@@ -20,8 +20,7 @@ class AddonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         // CoreComponentRepository::instantiateShopRepository();
         return view('backend.addons.index');
     }
@@ -31,8 +30,7 @@ class AddonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         return view('backend.addons.create');
     }
 
@@ -42,9 +40,7 @@ class AddonController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-
+    public function store(Request $request) {
         if (env('DEMO_MODE') == 'On') {
             flash(translate('This action is disabled in demo mode'))->error();
             return back();
@@ -58,7 +54,6 @@ class AddonController extends Controller
                     mkdir($dir, 0777, true);
 
                 $path = Storage::disk('local')->put('addons', $request->addon_zip);
-
                 $zipped_file_name = $request->addon_zip->getClientOriginalName();
 
                 //Unzip uploaded update file and remove zip file.
@@ -66,7 +61,6 @@ class AddonController extends Controller
                 $res = $zip->open(base_path('public/' . $path));
 
                 $random_dir = Str::random(10);
-
                 $dir = trim($zip->getNameIndex(0), '/');
 
                 if ($res === true) {
@@ -97,11 +91,9 @@ class AddonController extends Controller
                             foreach ($json['directory'][0]['name'] as $directory) {
                                 if (is_dir(base_path($directory)) == false) {
                                     mkdir(base_path($directory), 0777, true);
-
                                 } else {
                                     echo "error on creating directory";
                                 }
-
                             }
                         }
 
@@ -128,11 +120,9 @@ class AddonController extends Controller
                             foreach ($json['directory'][0]['name'] as $directory) {
                                 if (is_dir(base_path($directory)) == false) {
                                     mkdir(base_path($directory), 0777, true);
-
                                 } else {
                                     echo "error on creating directory";
                                 }
-
                             }
                         }
 
@@ -234,7 +224,6 @@ class AddonController extends Controller
         //     'notification' => translate('addon_status_updated_successfully')
         // );
         // return $data;
-
         return 1;
     }
 }
