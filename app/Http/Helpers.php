@@ -29,10 +29,9 @@ use Illuminate\Support\Facades\Log;
 
 //highlights the selected navigation on admin panel
 if (!function_exists('sendSMS')) {
-    function sendSMS($to, $from, $text, $template_id)
-    {
+    function sendSMS($to, $from, $text, $template_id) {
         if (OtpConfiguration::where('type', 'nexmo')->first()->value == 1) {
-            $api_key = env("NEXMO_KEY"); //put ssl provided api_token here
+            $api_key = env("NEXMO_KEY"); // put ssl provided api_token here
             $api_secret = env("NEXMO_SECRET"); // put ssl provided sid here
 
             $params = [
@@ -76,7 +75,7 @@ if (!function_exists('sendSMS')) {
                 );
             } catch (\Exception $e) {}
         } elseif (OtpConfiguration::where('type', 'ssl_wireless')->first()->value == 1) {
-            $token = env("SSL_SMS_API_TOKEN"); //put ssl provided api_token here
+            $token = env("SSL_SMS_API_TOKEN"); // put ssl provided api_token here
             $sid = env("SSL_SMS_SID"); // put ssl provided sid here
 
             $params = [
@@ -131,7 +130,6 @@ if (!function_exists('sendSMS')) {
 
 
             $auth_key = env('AUTH_KEY');
-
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
@@ -155,7 +153,6 @@ if (!function_exists('sendSMS')) {
 
             $response = curl_exec($curl);
             $err = curl_error($curl);
-
             curl_close($curl);
 
             return $response;
@@ -170,8 +167,7 @@ if (!function_exists('sendSMS')) {
 
 //highlights the selected navigation on admin panel
 if (!function_exists('areActiveRoutes')) {
-    function areActiveRoutes(array $routes, $output = "active")
-    {
+    function areActiveRoutes(array $routes, $output = "active") {
         foreach ($routes as $route) {
             if (Route::currentRouteName() == $route) return $output;
         }
@@ -180,8 +176,7 @@ if (!function_exists('areActiveRoutes')) {
 
 //highlights the selected navigation on frontend
 if (!function_exists('areActiveRoutesHome')) {
-    function areActiveRoutesHome(array $routes, $output = "active")
-    {
+    function areActiveRoutesHome(array $routes, $output = "active") {
         foreach ($routes as $route) {
             if (Route::currentRouteName() == $route) return $output;
         }
